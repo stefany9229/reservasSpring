@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  postgres-booking:
+    container_name: postgres-DB
+    image: postgres
+    environment:
+      POSTGRES_USER: db-user
+      POSTGRES_PASSWORD: admin123!
+      POSTGRES_DB: booking
+      PGDATA: /data/postgres
+    volumes:
+      - postgres-booking:/data/postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - application
+    restart: unless-stopped
+
+networks:
+  application:
+    driver: bridge
+
+volumes:
+  postgres-booking:
