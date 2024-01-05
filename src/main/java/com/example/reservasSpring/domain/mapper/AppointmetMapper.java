@@ -14,6 +14,7 @@ public interface AppointmetMapper {
     @Mapping(source = "user.lastName",target = "clientLastName")
     @Mapping(source = "employee.user.firstName",target = "professionalName")
     @Mapping(source = "employee.user.lastName",target = "professionalLastName")
+    @Mapping(source = "status", target = "status")
     AppointmetGetDto appointmentToAppointmentGetDto(Appointment appointment);
 
 
