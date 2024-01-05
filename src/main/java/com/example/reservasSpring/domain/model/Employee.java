@@ -28,7 +28,7 @@ public  class Employee {
     )
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -36,6 +36,7 @@ public  class Employee {
     @JoinColumn(name = "job_id", referencedColumnName = "id")
     private Job job;
 
+    private Boolean enable;
     private LocalDateTime creatAt;
 
 }

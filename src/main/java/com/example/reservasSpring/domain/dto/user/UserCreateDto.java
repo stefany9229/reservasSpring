@@ -5,6 +5,7 @@ import com.example.reservasSpring.domain.model.lasting.ERole;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
+import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record UserCreateDto(
@@ -14,6 +15,6 @@ public record UserCreateDto(
         String email,
         String password,
         Boolean enable,
-        List<ERole> roles
+        Set<ERole> roles
 ) {
 }

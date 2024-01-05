@@ -7,6 +7,7 @@ import org.hibernate.proxy.HibernateProxy;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
@@ -39,7 +40,7 @@ public class User {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name")
-    private List<ERole> roles;
+    private Set<ERole> roles;
 
     @Override
     public final boolean equals(Object o) {

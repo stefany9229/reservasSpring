@@ -3,6 +3,7 @@ package com.example.reservasSpring.domain.dto.user;
 import com.example.reservasSpring.domain.model.lasting.ERole;
 
 import java.util.List;
+import java.util.Set;
 
 public record UserGetItemDto(
         Integer id,
@@ -10,7 +11,7 @@ public record UserGetItemDto(
         String lastName,
         String email,
         Boolean enable,
-        List<ERole> roles
+        Set<ERole> roles
 ){
 
 }
