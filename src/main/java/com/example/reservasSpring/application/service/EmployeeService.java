@@ -30,25 +30,25 @@ public class EmployeeService {
     private IUserRepository userRepository;
     private IJobRepository jobRepository;
 
-    public EmployeeGetItemDto create(EmployeeCreateDTO employeeCreateDTO) {
+    public Employee createEmployee(EmployeeCreateDTO employeeCreateDTO) {
         Employee employee= new Employee();
-        User user = null;
+        User user_ = new User();
         Optional<User> userOptional =userRepository.findUserByEmail(employeeCreateDTO.email());
 
         // validando y agregando la parte de usuario
         if(userOptional.isPresent()){
 
-            user= userOptional.get();
-            user.setEnable(true);
-            Set<ERole> roles = user.getRoles();
+            user_= userOptional.get();
+            user_.setEnable(true);
+            Set<ERole> roles = user_.getRoles();
             roles.add(ERole.PROFESSIONAL);
-            user.setRoles(roles);
+            user_.setRoles(roles);
         }else{
-            user= userRepository.save(employeeMapper.employeeCreateDtoTouser(employeeCreateDTO));
-            user.setRoles(Collections.singleton(ERole.PROFESSIONAL));
-            user.setEnable(true);
+            user_= userRepository.save(employeeMapper.employeeCreateDtoTouser(employeeCreateDTO));
+            user_.setRoles(Collections.singleton(ERole.PROFESSIONAL));
+            user_.setEnable(true);
         }
-        employee.setUser(user);
+        employee.setUser(user_);
 
         // vaidando y agregado el job
 
@@ -59,10 +59,23 @@ public class EmployeeService {
         }
         employee.setJob(jobOptional.get());
         employee.setEnable(employeeCreateDTO.enable());
-        EmployeeGetItemDto response= employeeMapper.employoToGetItemDto(employeeRepository.save(employee));
+       // EmployeeGetItemDto response= employeeMapper.employoToGetItemDto(employeeRepository.save(employee));
 
+        return employee;
+
+
+    }
+
+    public EmployeeGetItemDto create (EmployeeCreateDTO employeeCreateDT){
+        Employee employee= employeeRepository.save(this.createEmployee(employeeCreateDT));
+        EmployeeGetItemDto response= employeeMapper.employoToGetItemDto(employee);
         return response;
 
+    }
 
+    public Employee findEmployeeByEmail(String email) {
+        return employeeRepository.findByUserEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(
+                        org.springframework.http.HttpStatus.BAD_REQUEST, "Empleado no econtrado"));
     }
 }

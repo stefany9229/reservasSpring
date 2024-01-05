@@ -1,10 +1,12 @@
 package com.example.reservasSpring.domain.dto.user;
 
 import com.example.reservasSpring.domain.model.lasting.ERole;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 import java.util.Set;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record UserGetItemDto(
         Integer id,
         String firstName,

@@ -8,6 +8,7 @@ import com.example.reservasSpring.domain.model.lasting.ERole;
 import com.example.reservasSpring.domain.repository.IUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -29,5 +30,14 @@ public class UserService {
 
     public List<UserGetItemDto> findAll(){
         return userMapper.userToUserItemList(userRepository.findAll());
+    }
+
+    public List<UserGetItemDto> findAllByRole(ERole role ){
+        List<User> users= userRepository.findUsersWithOnlyRole(role);
+        return userMapper.userToUserItemList(users);
+    }
+    public User findByEmail( String email){
+        return userRepository.findUserByEmail(email).orElseThrow(() -> new ResponseStatusException(
+                org.springframework.http.HttpStatus.BAD_REQUEST, "No existe e usuario asociaciado al correo" + email));
     }
 }
