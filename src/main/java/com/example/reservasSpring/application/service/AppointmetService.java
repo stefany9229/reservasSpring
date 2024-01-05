@@ -33,6 +33,7 @@ public class AppointmetService {
         appointment.setEmployee(employee);
         appointment.setUser(user);
         appointment.setStartTime(appointmentCreateDto.startTime());
+        appointment.setFinishTime(appointmentCreateDto.finishTime());
 
         return appointment;
 
