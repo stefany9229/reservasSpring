@@ -1,7 +1,7 @@
 package com.example.reservasSpring.domain.dto;
 
 
-import com.example.reservasSpring.domain.model.ERole;
+import com.example.reservasSpring.domain.model.lasting.ERole;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;

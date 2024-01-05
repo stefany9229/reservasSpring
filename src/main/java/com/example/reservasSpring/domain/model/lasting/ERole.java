@@ -1,4 +1,4 @@
-package com.example.reservasSpring.domain.model;
+package com.example.reservasSpring.domain.model.lasting;
 
 import lombok.Getter;
 
