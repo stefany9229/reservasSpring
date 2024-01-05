@@ -1,8 +1,6 @@
 package com.example.reservasSpring.domain.model;
-
 import com.example.reservasSpring.domain.model.lasting.EStatus;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
 
@@ -18,7 +16,7 @@ public class Appointment {
     private User user;
     @ManyToOne
     @JoinColumn(name = "employee_id")
-    private EStatus.Employee employee;
+    private Employee employee;
 
     @Enumerated(EnumType.STRING)
     private EStatus status;
