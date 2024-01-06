@@ -10,8 +10,11 @@ import com.example.reservasSpring.domain.model.User;
 import com.example.reservasSpring.domain.model.lasting.EStatus;
 import com.example.reservasSpring.domain.repository.IAppointmentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 
 @Service
@@ -21,6 +24,12 @@ public class AppointmetService {
     private UserService userService;
     private EmployeeService employeeService;
     private AppointmetMapper appointmetMapper;
+
+    public List<AppointmetGetDto> findAll(){
+        List<Appointment> appointments= appointmentRepository.findAll();
+        List<AppointmetGetDto> appointmetGetDtoList = appointmetMapper.appointmentToAppointmentGetDtoList(appointments);
+        return appointmetGetDtoList;
+    }
 
     public Appointment createAppointment(AppointmentCreateDto appointmentCreateDto){
 
@@ -39,16 +48,41 @@ public class AppointmetService {
         appointment.setUser(user);
         appointment.setStartTime(appointmentCreateDto.startTime());
         appointment.setFinishTime(appointmentCreateDto.finishTime());
-        appointment.setStatus(EStatus.ACTIVE);
-
+        appointment.setStatus(appointmentCreateDto.status());
         return appointment;
-
     }
 
     public AppointmetGetDto  create(AppointmentCreateDto appointmentCreateDto){
-        Appointment appointment= appointmentRepository.save(this.createAppointment(appointmentCreateDto));
+        Appointment appointmentToSent=(this.createAppointment(appointmentCreateDto));
+        appointmentToSent.setStatus(EStatus.ACTIVE);
+        Appointment appointment= appointmentRepository.save(appointmentToSent);
         AppointmetGetDto response= appointmetMapper.appointmentToAppointmentGetDto(appointment);
         return response;
     }
 
+    public Appointment findByIdAppoinment(Integer id){
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No hay un usuario asociado a ese id"));
+        //AppointmetGetDto response= appointmetMapper.appointmentToAppointmentGetDto(appointment);
+        return appointment;
+    }
+
+    public AppointmetGetDto findById(Integer id){
+        AppointmetGetDto response=appointmetMapper.appointmentToAppointmentGetDto(this.findByIdAppoinment(id));
+        return response;
+    }
+
+    public void deleteByid(Integer id){
+        Appointment appointment= this.findByIdAppoinment(id);
+        appointmentRepository.delete(appointment);
+
+    }
+
+    public void update(Integer id, AppointmentCreateDto appointmentCreateDto){
+        Appointment appointmentValidate= this.findByIdAppoinment(id);
+        Appointment appointment= this.createAppointment(appointmentCreateDto);
+        appointment.setId(id);
+        appointmentRepository.save(appointment) ;
+
+    }
 }

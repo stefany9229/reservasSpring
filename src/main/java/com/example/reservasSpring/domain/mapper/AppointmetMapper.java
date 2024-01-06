@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
+import java.util.List;
+
 @Mapper(componentModel  = MappingConstants.ComponentModel.SPRING)
 public interface AppointmetMapper {
 
@@ -16,6 +18,8 @@ public interface AppointmetMapper {
     @Mapping(source = "employee.user.lastName",target = "professionalLastName")
     @Mapping(source = "status", target = "status")
     AppointmetGetDto appointmentToAppointmentGetDto(Appointment appointment);
+
+    List<AppointmetGetDto> appointmentToAppointmentGetDtoList(List<Appointment> appointmentList);
 
 
 

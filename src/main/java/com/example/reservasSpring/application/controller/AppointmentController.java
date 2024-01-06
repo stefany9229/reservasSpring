@@ -6,10 +6,7 @@ import com.example.reservasSpring.domain.dto.employee.EmployeeCreateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/appointment")
@@ -22,4 +19,21 @@ public class AppointmentController {
     public ResponseEntity<?> create(@RequestBody AppointmentCreateDto appointmentCreateDto){
         return  new ResponseEntity<>(appointmetService.create(appointmentCreateDto), HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public ResponseEntity<?> findAll(){
+        return  new ResponseEntity<>(appointmetService.findAll(),HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update (@PathVariable Integer id, @RequestBody AppointmentCreateDto appointmentCreateDto){
+        appointmetService.update(id, appointmentCreateDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete (@PathVariable Integer id ){
+        appointmetService.deleteByid(id);
+        return new ResponseEntity<>("Borrado con éxito",HttpStatus.OK);
+    }
+
 }
