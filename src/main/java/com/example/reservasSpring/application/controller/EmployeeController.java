@@ -1,7 +1,6 @@
 package com.example.reservasSpring.application.controller;
 
 import com.example.reservasSpring.application.service.EmployeeService;
-import com.example.reservasSpring.domain.dto.JobDto;
 import com.example.reservasSpring.domain.dto.employee.EmployeeCreateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
