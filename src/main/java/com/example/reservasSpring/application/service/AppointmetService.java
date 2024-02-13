@@ -38,9 +38,8 @@ public class AppointmetService {
         //Busco el employe
         Employee employee= employeeService.findEmployeeByEmail(appointmentCreateDto.professionalEmail());
 
-        if(user.equals(employee.getUser())){
-            throw new  ResponseStatusException(
-                    org.springframework.http.HttpStatus.BAD_REQUEST, "El cliente y el profesional no pueden correponder al mismo ususario");
+        if(user.getEmail().equals(employee.getUser().getEmail())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El cliente y el profesional no pueden corresponder al mismo usuario");
         }
 
         Appointment appointment = new Appointment();
