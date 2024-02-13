@@ -13,6 +13,7 @@ import com.example.reservasSpring.domain.repository.IJobRepository;
 import com.example.reservasSpring.domain.repository.IUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
@@ -29,6 +30,7 @@ public class EmployeeService {
     private EmployeeMapper employeeMapper;
     private IUserRepository userRepository;
     private IJobRepository jobRepository;
+
 
     public Employee createEmployee(EmployeeCreateDTO employeeCreateDTO) {
         Employee employee= new Employee();
@@ -67,7 +69,8 @@ public class EmployeeService {
     }
 
     public EmployeeGetItemDto create (EmployeeCreateDTO employeeCreateDT){
-        Employee employee= employeeRepository.save(this.createEmployee(employeeCreateDT));
+        Employee employeeTemp= this.createEmployee(employeeCreateDT);
+        Employee employee= employeeRepository.save(employeeTemp);
         EmployeeGetItemDto response= employeeMapper.employoToGetItemDto(employee);
         return response;
 

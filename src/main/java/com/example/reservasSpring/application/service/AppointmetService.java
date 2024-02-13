@@ -84,4 +84,6 @@ public class AppointmetService {
         appointmentRepository.save(appointment) ;
 
     }
+
+
 }

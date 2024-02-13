@@ -7,6 +7,7 @@ import com.example.reservasSpring.domain.repository.IJobRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public class JobService {
     public List<Job> findAll(){
         return jobRepository.findAll();
     }
+
+    @Transactional
     public Job create ( JobDto jobDto){
         Job job= jobRepository.save(jobMapper.toJob(jobDto));
         return job;
