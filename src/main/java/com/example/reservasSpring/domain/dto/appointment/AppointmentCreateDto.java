@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.LocalDateTime;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record AppointmentCreateDto(
-String clientEmail,
+//String clientEmail,
 String professionalEmail,
 EStatus status,
 LocalDateTime startTime,

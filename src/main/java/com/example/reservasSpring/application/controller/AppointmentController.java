@@ -25,6 +25,11 @@ public class AppointmentController {
         return  new ResponseEntity<>(appointmetService.findAll(),HttpStatus.OK);
     }
 
+    @GetMapping(("/byUser"))
+    public ResponseEntity<?> findAllByUSre(){
+        return  new ResponseEntity<>(appointmetService.findByUserId(),HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> update (@PathVariable Integer id, @RequestBody AppointmentCreateDto appointmentCreateDto){
         appointmetService.update(id, appointmentCreateDto);

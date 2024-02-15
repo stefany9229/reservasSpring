@@ -14,4 +14,8 @@ public interface IAppointmentRepository extends JpaRepository<Appointment, Integ
             @Param("employeeId") Integer employeeId,
             @Param("startDateTime") LocalDateTime startDateTime,
             @Param("endDateTime") LocalDateTime endDateTime);
+
+
+    List<Appointment> findByUserId(Integer userId);
 }
+

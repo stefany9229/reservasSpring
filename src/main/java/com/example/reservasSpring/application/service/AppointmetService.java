@@ -11,6 +11,9 @@ import com.example.reservasSpring.domain.model.lasting.EStatus;
 import com.example.reservasSpring.domain.repository.IAppointmentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,6 +27,7 @@ public class AppointmetService {
     private UserService userService;
     private EmployeeService employeeService;
     private AppointmetMapper appointmetMapper;
+    private AuthenticationService authenticationService;
 
     public List<AppointmetGetDto> findAll(){
         List<Appointment> appointments= appointmentRepository.findAll();
@@ -34,7 +38,8 @@ public class AppointmetService {
     public Appointment createAppointment(AppointmentCreateDto appointmentCreateDto){
 
         //Busco el usario
-        User user = userService.findByEmail(appointmentCreateDto.clientEmail());
+        //User user = userService.findByEmail(appointmentCreateDto.clientEmail());
+        User user= authenticationService.getPrincipal();
         //Busco el employe
         Employee employee= employeeService.findEmployeeByEmail(appointmentCreateDto.professionalEmail());
 
@@ -83,5 +88,13 @@ public class AppointmetService {
         appointment.setId(id);
         appointmentRepository.save(appointment) ;
 
+    }
+
+    public  List<AppointmetGetDto> findByUserId(){
+        // obtengo el usuario principal
+        User userPrincipal= authenticationService.getPrincipal();
+        List<Appointment> appointments= appointmentRepository.findByUserId(userPrincipal.getId());
+        List<AppointmetGetDto> appointmetGetDtoList = appointmetMapper.appointmentToAppointmentGetDtoList(appointments);
+        return appointmetGetDtoList;
     }
 }

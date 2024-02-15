@@ -12,7 +12,9 @@ import com.example.reservasSpring.domain.repository.IEmployeeRepository;
 import com.example.reservasSpring.domain.repository.IJobRepository;
 import com.example.reservasSpring.domain.repository.IUserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collections;
@@ -29,6 +31,7 @@ public class EmployeeService {
     private EmployeeMapper employeeMapper;
     private IUserRepository userRepository;
     private IJobRepository jobRepository;
+    private PasswordEncoder passwordEncoder;
 
     public Employee createEmployee(EmployeeCreateDTO employeeCreateDTO) {
         Employee employee= new Employee();
@@ -44,7 +47,9 @@ public class EmployeeService {
             roles.add(ERole.PROFESSIONAL);
             user_.setRoles(roles);
         }else{
-            user_= userRepository.save(employeeMapper.employeeCreateDtoTouser(employeeCreateDTO));
+            User userToSave= employeeMapper.employeeCreateDtoTouser(employeeCreateDTO);
+            userToSave.setPassword(passwordEncoder.encode((employeeCreateDTO.password())));
+            user_= userRepository.save(userToSave);
             user_.setRoles(Collections.singleton(ERole.PROFESSIONAL));
             user_.setEnable(true);
         }
@@ -67,7 +72,8 @@ public class EmployeeService {
     }
 
     public EmployeeGetItemDto create (EmployeeCreateDTO employeeCreateDT){
-        Employee employee= employeeRepository.save(this.createEmployee(employeeCreateDT));
+        Employee employeeTemp= this.createEmployee(employeeCreateDT);
+        Employee employee= employeeRepository.save(employeeTemp);
         EmployeeGetItemDto response= employeeMapper.employoToGetItemDto(employee);
         return response;
 
