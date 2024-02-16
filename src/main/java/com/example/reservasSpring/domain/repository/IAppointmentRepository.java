@@ -17,5 +17,8 @@ public interface IAppointmentRepository extends JpaRepository<Appointment, Integ
 
 
     List<Appointment> findByUserId(Integer userId);
+
+    @Query("SELECT a FROM Appointment a WHERE a.employee.user.email = :email")
+    List<Appointment> findByEmployeeEmail(String email);
 }
 

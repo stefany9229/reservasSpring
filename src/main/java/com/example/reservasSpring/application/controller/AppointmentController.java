@@ -30,6 +30,11 @@ public class AppointmentController {
         return  new ResponseEntity<>(appointmetService.findByUserId(),HttpStatus.OK);
     }
 
+    @GetMapping(("/byEmployee"))
+    public ResponseEntity<?> findAllByEmployee(){
+        return  new ResponseEntity<>(appointmetService.findByEmployeeEmail(),HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> update (@PathVariable Integer id, @RequestBody AppointmentCreateDto appointmentCreateDto){
         appointmetService.update(id, appointmentCreateDto);

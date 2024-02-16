@@ -97,4 +97,11 @@ public class AppointmetService {
         List<AppointmetGetDto> appointmetGetDtoList = appointmetMapper.appointmentToAppointmentGetDtoList(appointments);
         return appointmetGetDtoList;
     }
+
+    public  List<AppointmetGetDto> findByEmployeeEmail(){
+        User userPrincipal= authenticationService.getPrincipal();
+        List<Appointment> appointments= appointmentRepository.findByEmployeeEmail(userPrincipal.getEmail());
+        List<AppointmetGetDto> appointmetGetDtoList = appointmetMapper.appointmentToAppointmentGetDtoList(appointments);
+        return appointmetGetDtoList;
+    }
 }
