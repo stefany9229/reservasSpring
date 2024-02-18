@@ -40,6 +40,11 @@ public class AppointmentController {
         appointmetService.update(id, appointmentCreateDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @PutMapping("/status/{id}")
+    public ResponseEntity<?> updateStatus (@PathVariable Integer id, @RequestBody String status){
+        appointmetService.updateStatus(id, status);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete (@PathVariable Integer id ){
         appointmetService.deleteByid(id);

@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 public enum EStatus {
 
 
-    ACTIVE("ACTIVE"),
-    CLOSED("CLOSED"),
-    CANCELLED("CANCELLED");
+    ACTIVO("ACTIVO"),
+    FINALIZADO("FINALIZADO"),
+    CANCELADO("CANCELADO");
 
 
     EStatus(String name) {

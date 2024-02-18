@@ -71,7 +71,7 @@ public class AppointmentServiceTest {
         String professionalEmail = "professional@example.com";
         // Crear el DTO con los emails correctos
         AppointmentCreateDto appointmentCreateDto = new AppointmentCreateDto(
-                clientEmail,
+
                 professionalEmail,
                 EStatus.ACTIVE,
                 LocalDateTime.now(),       // startTime
@@ -104,7 +104,7 @@ public class AppointmentServiceTest {
         // Configure los emails que serán usados en la prueba
         String email = "sameperson@example.com";
         AppointmentCreateDto appointmentCreateDto = new AppointmentCreateDto(
-                email,
+
                 email, // El mismo email para ambos indica que son la misma persona
                 EStatus.ACTIVE,
                 LocalDateTime.now(),       // startTime

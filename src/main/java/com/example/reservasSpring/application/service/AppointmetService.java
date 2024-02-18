@@ -58,7 +58,7 @@ public class AppointmetService {
 
     public AppointmetGetDto  create(AppointmentCreateDto appointmentCreateDto){
         Appointment appointmentToSent=(this.createAppointment(appointmentCreateDto));
-        appointmentToSent.setStatus(EStatus.ACTIVE);
+        appointmentToSent.setStatus(EStatus.ACTIVO);
         Appointment appointment= appointmentRepository.save(appointmentToSent);
         AppointmetGetDto response= appointmetMapper.appointmentToAppointmentGetDto(appointment);
         return response;
@@ -87,6 +87,14 @@ public class AppointmetService {
         Appointment appointment= this.createAppointment(appointmentCreateDto);
         appointment.setId(id);
         appointmentRepository.save(appointment) ;
+
+    }
+    public void updateStatus(Integer id, String status){
+        Appointment appointmentValidate= this.findByIdAppoinment(id);
+        String sanitizedStatus = status.replace("\"", "");
+        EStatus newStatus= EStatus.valueOf(sanitizedStatus);
+        appointmentValidate.setStatus(newStatus);
+        appointmentRepository.save(appointmentValidate) ;
 
     }
 
